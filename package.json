@@ -1,0 +1,30 @@
+{
+  "name": "ca.tim-cstj.game-view-resetter",
+  "displayName": "Game View Resetter",
+  "version": "0.9.0",
+  "unity": "2022.3",
+  "description": "This Editor script resets the Game View (Aspect ratio 16:9, Scale 1, Low Resolution Aspect Ratios off).",
+  "documentationUrl": "https://github.com/JonathanTremblay/UnityGameViewResetter#readme",
+  "changelogUrl": "https://github.com/JonathanTremblay/UnityGameViewResetter#version-history",
+  "licensesUrl": "https://creativecommons.org/share-your-work/public-domain/cc0/",
+  "type": "tool",
+  "keywords": [
+    "Project",
+	"Game",
+	"Game View",
+	"Game Window",
+	"Reset",
+	"Resetter",
+	"Ratio",
+    "Editor",
+    "Tool",
+    "Mac",
+    "Windows"
+  ],
+  "author": {
+    "name": "Jonathan Tremblay",
+    "email": "jtrembla@cstj.qc.ca",
+    "url": "github.com/JonathanTremblay"
+  },
+  "unityRelease": "5f1"
+}
