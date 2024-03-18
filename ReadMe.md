@@ -50,6 +50,8 @@ Project Repository: https://github.com/JonathanTremblay/UnityGameViewResetter
 
 ## Version History
 
+* 0.9.1
+    * Fixed an issue to reset game view after project startup.
 * 0.9.0
     * First public version.
 

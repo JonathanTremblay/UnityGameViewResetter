@@ -25,7 +25,7 @@ namespace GameViewResetter
     public class GameViewResetter : Editor
     {
 #if UNITY_EDITOR
-        static readonly string _currentVersion = "Version 0.9.0 (2024-03-13)."; 
+        static readonly string _currentVersion = "Version 0.9.1 (2024-03-18)."; 
         static readonly bool _showPositiveMessages = true; // If true, the positive message will be shown. If false, only the negative messages will be shown.
 
         static readonly Dictionary<string, string> _messagesEn = new() // A dictionary for English messages
@@ -41,7 +41,7 @@ namespace GameViewResetter
             {"LOW_RES_ERROR", "GameViewResetter Error: m_LowResolutionForAspectRatios field not found on GameView window."}
         };
 
-        static readonly Dictionary<string, string> _messagesFr = new() // A dictionary for English messages
+        static readonly Dictionary<string, string> _messagesFr = new() // A dictionary for French messages
         {
             {"ABOUT", $"** GameViewResetter est gratuit et open source. Pour les mises à jour et les commentaires, visitez https://github.com/JonathanTremblay/UnityGameViewResetter **\n** {_currentVersion} **"},
             {"SUCCESS", "Tous les paramètres Game View ont été réinitialisés!"},
@@ -77,7 +77,18 @@ namespace GameViewResetter
         static GameViewResetter ()
         {
             if (_forceEnglishMessages) _messages = _messagesEn;
-            if (SessionState.GetInt(_SESSION_STATE_KEY, 0) == 1) return; // If the game view settings have already been reset, we don't need to do it again
+            EditorApplication.projectChanged += ResetAllGameViewSettings; // Add a listener to the project change event
+            EditorApplication.playModeStateChanged += ResetAllGameViewSettings; // Add a listener to the playmode state change event
+            ResetAllGameViewSettings();
+        }
+
+        /// <summary>
+        /// Called when the play mode state changes (when entering play mode, for example).
+        /// Required by the event listener.
+        /// </summary>
+        static void ResetAllGameViewSettings(PlayModeStateChange state)
+        {
+            if (state != PlayModeStateChange.EnteredPlayMode) return;
             ResetAllGameViewSettings();
         }
 
@@ -86,6 +97,7 @@ namespace GameViewResetter
         /// </summary>
         static void ResetAllGameViewSettings()
         {
+            if (SessionState.GetInt(_SESSION_STATE_KEY, 0) == 1) return; // If the game view settings have already been reset, we don't need to do it again
             _hasMadeOneChange = false;
             Assembly assembly = typeof(Editor).Assembly;
             System.Type gameViewType = assembly.GetType("UnityEditor.GameView");
@@ -101,7 +113,7 @@ namespace GameViewResetter
             }
             if (tGameViews.Length == 0)
             {
-                Debug.Log(_messages["NO_GAME_WINDOW"]);
+                // Debug.Log(_messages["NO_GAME_WINDOW"]); // Desactivated because it's common at project startup
                 return; // No game window, so there's nothing to reset
             }
             foreach (Object gameViewWindow in tGameViews)
