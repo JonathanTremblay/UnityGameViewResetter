@@ -18,7 +18,7 @@ This Editor script resets the Game View (Aspect ratio 16:9, Scale 1, Low Resolut
 * Import this lightweight package to your project (or manually add the scripts to an Editor folder in the Assets folder).
 * To use it, simply open your project.
 * It executes the verification only once, when the Unity editor is loaded or when the script is added for the first time.
-* It can also be executed manually from the Window menu.
+* It can also be executed manually from the Help menu.
 * That's it!
 
 ## Technical Details
@@ -27,7 +27,7 @@ This Editor script resets the Game View (Aspect ratio 16:9, Scale 1, Low Resolut
 
 ## Compatibility
 
-* Tested on Windows and MacOS with Unity version 2022.3.17 (LTS).
+* Tested on Windows and MacOS with Unity version 2022.3.39 (LTS).
 
 ## Known Issues
 
@@ -50,6 +50,8 @@ Project Repository: https://github.com/JonathanTremblay/UnityGameViewResetter
 
 ## Version History
 
+* 0.9.2
+    * Improved feedback and detection.
 * 0.9.1
     * Fixed an issue to reset game view after project startup.
 * 0.9.0
