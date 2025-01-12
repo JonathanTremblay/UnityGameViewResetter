@@ -25,12 +25,12 @@ namespace GameViewResetter
     [InitializeOnLoad]
     public class GameViewResetter : Editor
     {
-        static readonly string _currentVersion = "Version 0.9.2 (2024-08-05).";
-        static readonly bool _showPositiveMessages = true; // If true, the positive message will be shown. If false, only the negative messages will be shown.
+        const string _VERSION = "Version 0.9.3 (2025-01-12).";
+        const bool _SHOW_POSITIVE_MESSAGES = true; // If true, the positive message will be shown. If false, only the negative messages will be shown.
 
         static readonly Dictionary<string, string> _messagesEn = new() // A dictionary for English messages
         {
-            {"ABOUT", $"<size=10>** Game View Resetter is free and open source. For updates and feedback, visit https://github.com/JonathanTremblay/UnityGameViewResetter **</size>\n<size=10>** {_currentVersion} **</size>"},
+            {"ABOUT", $"<size=10>** Game View Resetter is free and open source. For updates and feedback, visit https://github.com/JonathanTremblay/UnityGameViewResetter **</size>\n<size=10>** {_VERSION} **</size>"},
             {"SUCCESS", "One or more Game View settings have been reset:"},
             {"NO_GAME_WINDOW", "Game View Resetter: No Game View window found, so no reset could be made."},
             {"NO_CHANGE", "Game View Resetter: No changes have been made to the Game View settings."},
@@ -45,7 +45,7 @@ namespace GameViewResetter
 
         static readonly Dictionary<string, string> _messagesFr = new() // A dictionary for English messages
         {
-            {"ABOUT", $"<size=10>** Game View Resetter est gratuit et open source. Pour les mises à jour et les commentaires, visitez https://github.com/JonathanTremblay/UnityGameViewResetter **</size>\n<size=10>** {_currentVersion} **</size>"},
+            {"ABOUT", $"<size=10>** Game View Resetter est gratuit et open source. Pour les mises à jour et les commentaires, visitez https://github.com/JonathanTremblay/UnityGameViewResetter **</size>\n<size=10>** {_VERSION} **</size>"},
             {"SUCCESS", "Un ou plusieurs paramètres Game View ont été réinitialisés:"},
             {"NO_GAME_WINDOW", "Game View Resetter : Aucune fenêtre Game trouvée, donc aucune réinitialisation n'a pu être faite."},
             {"NO_CHANGE", "Game View Resetter : Aucun changement n'a été apporté aux paramètres Game View."},
@@ -129,7 +129,7 @@ namespace GameViewResetter
                 ResetRatio(gameViewWindow, gameViewWindowType, RatioType.SixteenByNine); // Last, reset to 16:9 aspect
             }
 
-            if (_showPositiveMessages && _hasMadeChange)
+            if (_SHOW_POSITIVE_MESSAGES && _hasMadeChange)
             {
                 Debug.Log($"{_greenArrowL} <b>{_messages["SUCCESS"]} {GetSettingsChangedString()}</b> {_greenArrowR}\n{_messages["ABOUT"]}");
                 SessionState.SetInt("hasResetGameViewOnce", 1); // The game view settings have been reset, so we don't need to do it again

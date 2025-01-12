@@ -50,6 +50,8 @@ Project Repository: https://github.com/JonathanTremblay/UnityGameViewResetter
 
 ## Version History
 
+* 0.9.3
+    * Renamed asmdef file to match namespace. 
 * 0.9.2
     * Improved feedback and detection.
 * 0.9.1
