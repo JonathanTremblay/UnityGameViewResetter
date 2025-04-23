@@ -27,7 +27,7 @@ This Editor script resets the Game View (Aspect ratio 16:9, Scale 1, Low Resolut
 
 ## Compatibility
 
-* Tested on Windows and MacOS with Unity version 2022.3.39 (LTS).
+* Tested on Windows and MacOS with Unity version 2022.3.17 and 6000.0.32.
 
 ## Known Issues
 
@@ -50,6 +50,8 @@ Project Repository: https://github.com/JonathanTremblay/UnityGameViewResetter
 
 ## Version History
 
+* 0.9.4
+    * Fixed a bug when there is no main camera.
 * 0.9.3
     * Renamed asmdef file to match namespace. Limited reset to once per session.
 * 0.9.2

@@ -25,7 +25,7 @@ namespace GameViewResetter
     [InitializeOnLoad]
     public class GameViewResetter : Editor
     {
-        const string _VERSION = "Version 0.9.3 (2025-01-18).";
+        const string _VERSION = "Version 0.9.4 (2025-04-23).";
         const bool _SHOW_POSITIVE_MESSAGES = true; // If true, the positive message will be shown. If false, only the negative messages will be shown.
 
         static readonly Dictionary<string, string> _messagesEn = new() // A dictionary for English messages
@@ -33,6 +33,7 @@ namespace GameViewResetter
             {"ABOUT", $"<size=10>** Game View Resetter is free and open source. For updates and feedback, visit https://github.com/JonathanTremblay/UnityGameViewResetter **</size>\n<size=10>** {_VERSION} **</size>"},
             {"SUCCESS", "One or more Game View settings have been reset:"},
             {"NO_GAME_WINDOW", "Game View Resetter: No Game View window found, so no reset could be made."},
+            {"NO_CAMERA", "Game View Resetter: No camera found, so no reset could be made."},
             {"NO_CHANGE", "Game View Resetter: No changes have been made to the Game View settings."},
             {"SIZE_ERROR", "Game View Resetter Error: SizeSelectionCallback method not found on GameView window."},
             {"SCALE_AREA_ERROR", "Game View Resetter Error: areaObj object is null on m_ZoomArea field."},
@@ -48,6 +49,7 @@ namespace GameViewResetter
             {"ABOUT", $"<size=10>** Game View Resetter est gratuit et open source. Pour les mises à jour et les commentaires, visitez https://github.com/JonathanTremblay/UnityGameViewResetter **</size>\n<size=10>** {_VERSION} **</size>"},
             {"SUCCESS", "Un ou plusieurs paramètres Game View ont été réinitialisés:"},
             {"NO_GAME_WINDOW", "Game View Resetter : Aucune fenêtre Game trouvée, donc aucune réinitialisation n'a pu être faite."},
+            {"NO_CAMERA", "Game View Resetter : Aucune caméra trouvée, donc aucune réinitialisation n'a pu être faite."},
             {"NO_CHANGE", "Game View Resetter : Aucun changement n'a été apporté aux paramètres Game View."},
             {"SIZE_ERROR", "Erreur de Game View Resetter : La méthode SizeSelectionCallback n'a pas été trouvée sur la fenêtre Game."},
             {"SCALE_AREA_ERROR", "Erreur de Game View Resetter : L'objet areaObj est null sur le champ m_ZoomArea."},
@@ -241,7 +243,21 @@ namespace GameViewResetter
         private static void ResetRatio(Object gameViewWindow, System.Type gameViewWindowType, RatioType ratioType = RatioType.SixteenByNine, bool isWorkaround = false)
         {
             bool shouldChangeValue = true;
-            if (_originalAspect == 0) _originalAspect = Camera.main.aspect; //if first call, store the original aspect ratio for later comparison
+
+            if (_originalAspect == 0)
+            {
+                Camera activeCamera = Camera.main;
+                if (activeCamera == null)
+                {
+                    activeCamera = FindFirstObjectByType<Camera>();
+                    if (activeCamera == null)
+                    {
+                        Debug.Log(_messages["NO_CAMERA"]);
+                        return; // Exit if no camera is found
+                    }
+                }
+                _originalAspect = activeCamera.aspect; //if first call, store the original aspect ratio for later comparison
+            }
             if (!isWorkaround)
             {
                 shouldChangeValue = !CheckIfEqualWithTwoDecimals(_originalAspect, _DESIRED_ASPECT); //should change if the comparison is false 
